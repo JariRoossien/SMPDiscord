@@ -24,6 +24,7 @@ public class BasicConfigManager implements ConfigManager {
     public void load() {
         kvMap.put("discord.token", System.getenv("SMP_DISCORD_TOKEN"));
         kvMap.put("message.channel", "1043579529899286528");
+        kvMap.put("api.key", System.getenv("HYPIXEL_API_KEY"));
     }
 
     @Override

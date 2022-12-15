@@ -5,7 +5,7 @@ import net.dv8tion.jda.api.entities.Message;
 
 import java.util.logging.Logger;
 
-public class BasicMessageHandler implements DiscordMessageHandler {
+public class BasicDiscordMessageHandler implements DiscordMessageHandler {
 
     @Override
     public void handleIncomingMessage(Member member, Message message) {

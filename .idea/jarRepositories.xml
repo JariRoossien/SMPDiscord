@@ -26,5 +26,10 @@
       <option name="name" value="JBoss Community repository" />
       <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="Hypixel" />
+      <option name="name" value="Hypixel" />
+      <option name="url" value="https://repo.hypixel.net/repository/Hypixel/" />
+    </remote-repository>
   </component>
 </project>
