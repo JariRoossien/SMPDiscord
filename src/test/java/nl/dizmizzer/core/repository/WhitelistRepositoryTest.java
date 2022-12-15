@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class WhitelistRepositoryTest {
 
-    WhitelistRepository whitelistRepository = new BasicWhitelistRepository();
+    final WhitelistRepository whitelistRepository = new BasicWhitelistRepository();
 
     @Before
     public void addPlayers() {

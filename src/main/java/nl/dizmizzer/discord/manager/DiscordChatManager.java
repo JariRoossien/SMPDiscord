@@ -1,6 +1,5 @@
 package nl.dizmizzer.discord.manager;
 
-import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.entities.channel.concrete.TextChannel;
 

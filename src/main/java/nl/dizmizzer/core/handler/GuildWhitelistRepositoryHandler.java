@@ -7,7 +7,7 @@ import nl.dizmizzer.core.repository.WhitelistRepository;
 import java.util.logging.Logger;
 
 public class GuildWhitelistRepositoryHandler implements WhitelistHandler {
-    private WhitelistRepository whitelistRepository;
+    private final WhitelistRepository whitelistRepository;
 
     public GuildWhitelistRepositoryHandler(WhitelistRepository whitelistRepository) {
         this.whitelistRepository = whitelistRepository;
