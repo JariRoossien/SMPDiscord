@@ -1,0 +1,4 @@
+name: TRSSMPPlugin
+main: nl.dizmizzer.mc.MCModule
+version: '${project.version}'
+api-version: 1.19
