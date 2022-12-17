@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import java.util.UUID;
 
+import static nl.dizmizzer.core.provider.MojangAPI.addHyphensToUUID;
+
 public class WhitelistRepositoryTest {
 
     final WhitelistRepository whitelistRepository = new BasicWhitelistRepository();
@@ -37,10 +39,7 @@ public class WhitelistRepositoryTest {
         UUID testUuid = test.getPlayerId();
         Assert.assertNotNull(testUuid);
         Assert.assertTrue(whitelistRepository.addPlayer(test));
-        Assert.assertEquals(test, whitelistRepository.getPlayerFrom(testUuid));
+        Assert.assertEquals(test, whitelistRepository.getPlayerFromUUID(testUuid));
     }
 
-    public static String addHyphensToUUID(String uuid) {
-        return uuid.substring(0, 8) + "-" + uuid.substring(8, 12) + "-" + uuid.substring(12, 16) + "-" + uuid.substring(16, 20) + "-" + uuid.substring(20);
-    }
 }

@@ -25,6 +25,13 @@ public class PlayerJoinLeaveListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent joinEvent) {
+        if ((System.currentTimeMillis() / 1000) < 1671303600L) {
+            if (!joinEvent.getPlayer().isOp()) {
+                joinEvent.getPlayer().kickPlayer("SMP is not open yet!");
+                return;
+            }
+        }
+
         this.statusManager.setPlayerCount(server.getOnlinePlayers().size());
         Player player = joinEvent.getPlayer();
         EmbedBuilder builder = new EmbedBuilder();

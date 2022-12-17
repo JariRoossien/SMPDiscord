@@ -1,5 +1,7 @@
 package nl.dizmizzer.core.repository;
 
+
+import lombok.Getter;
 import nl.dizmizzer.core.entity.WhitelistPlayer;
 
 import java.util.HashSet;
@@ -8,6 +10,7 @@ import java.util.UUID;
 
 public abstract class WhitelistRepository {
 
+    @Getter
     private final Set<WhitelistPlayer> playerSet = new HashSet<>();
 
     /**
@@ -30,7 +33,20 @@ public abstract class WhitelistRepository {
         return playerSet.add(player);
     }
 
-    public WhitelistPlayer getPlayerFrom(UUID playerId) {
+    public WhitelistPlayer getPlayerFromUUID(UUID playerId) {
         return playerSet.stream().filter(player -> player.getPlayerId().equals(playerId)).findAny().orElse(null);
     }
+
+    public WhitelistPlayer getPlayerFromUsername(String username) {
+        return playerSet.stream().filter(player -> player.getPlayerUsername().equalsIgnoreCase(username)).findAny().orElse(null);
+    }
+
+    public Set<WhitelistPlayer> getAllPlayers() {
+        return playerSet;
+    }
+
+    public abstract void load();
+
+    public abstract void save();
+
 }

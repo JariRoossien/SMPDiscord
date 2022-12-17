@@ -1,33 +1,44 @@
 package nl.dizmizzer.mc;
 
+import nl.dizmizzer.core.CoreModule;
+import nl.dizmizzer.core.runnable.GetGuildPlayerListRunnable;
 import nl.dizmizzer.discord.DiscordModule;
-import nl.dizmizzer.discord.config.BasicConfigManager;
 import nl.dizmizzer.mc.handler.DiscordMCMessageHandler;
+import nl.dizmizzer.mc.handler.MemberWhitelistHandler;
 import nl.dizmizzer.mc.listener.PlayerChatListener;
 import nl.dizmizzer.mc.listener.PlayerJoinLeaveListener;
-import nl.dizmizzer.core.provider.HypixelAPIProvider;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.UUID;
 
 public class MCModule extends JavaPlugin {
 
     private DiscordModule discordModule;
-    private HypixelAPIProvider hypixelAPIProvider;
-
+    private CoreModule coreModule;
     @Override
     public void onEnable() {
-        this.discordModule = new DiscordModule(new BasicConfigManager());
+        this.coreModule = new CoreModule();
+        this.discordModule = new DiscordModule(coreModule.getConfigManager(), coreModule.getMemberHandlerManager(), coreModule.getWhitelistRepository());
+
         this.discordModule.getHandlerManager().registerHandler(new DiscordMCMessageHandler(getServer()));
+        this.coreModule.getMemberHandlerManager().registerHandler(new MemberWhitelistHandler(getServer()));
+
         registerEvents(
-                new PlayerJoinLeaveListener(discordModule.getStatusManager(), discordModule.getDiscordChatManager(), getServer()),
+                new PlayerJoinLeaveListener(
+                        discordModule.getStatusManager(),
+                        discordModule.getDiscordChatManager(),
+                        getServer()),
                 new PlayerChatListener(discordModule.getDiscordChatManager())
         );
-        String apiKey = this.discordModule.getConfigManager().getStringFrom("api.key");
-        this.hypixelAPIProvider = new HypixelAPIProvider(UUID.fromString(apiKey));
+
         discordModule.getStatusManager().setPlayerCount(0);
 
+        this.coreModule.getWhitelistRepository().getAllPlayers()
+                .forEach(player -> getServer().getOfflinePlayer(player.getPlayerId()).setWhitelisted(true));
+
+        getServer().getScheduler().runTaskTimerAsynchronously(this,
+                new GetGuildPlayerListRunnable(coreModule.getHypixelAPIProvider(), coreModule.getMemberHandlerManager()),
+                0,
+                20 * 60 * 30);
     }
 
     private void registerEvents(Listener... listeners) {
@@ -39,5 +50,6 @@ public class MCModule extends JavaPlugin {
     @Override
     public void onDisable() {
         discordModule.destroy();
+        coreModule.destroy();
     }
 }

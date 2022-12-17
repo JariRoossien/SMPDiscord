@@ -2,7 +2,7 @@ package nl.dizmizzer.discord.listener;
 
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
-import nl.dizmizzer.discord.config.ConfigManager;
+import nl.dizmizzer.core.config.ConfigManager;
 import nl.dizmizzer.discord.manager.HandlerManager;
 import org.jetbrains.annotations.NotNull;
 

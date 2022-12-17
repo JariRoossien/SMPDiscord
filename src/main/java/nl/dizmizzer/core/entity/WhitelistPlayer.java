@@ -13,13 +13,13 @@ public class WhitelistPlayer {
     private UUID playerId;
     private String playerUsername;
 
-    private WhitelistPlayer referral;
+    private String referral;
 
     private boolean insertedByGuild;
 
     public WhitelistPlayer(UUID playerId, boolean insertedByGuild) {
         this.playerId = playerId;
-        this.referral = null;
+        this.referral = "No Referral";
         this.insertedByGuild = insertedByGuild;
     }
 

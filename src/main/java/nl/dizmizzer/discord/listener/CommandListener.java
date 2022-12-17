@@ -2,17 +2,36 @@ package nl.dizmizzer.discord.listener;
 
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import nl.dizmizzer.core.manager.MemberHandlerManager;
+import nl.dizmizzer.core.repository.WhitelistRepository;
+import nl.dizmizzer.discord.listener.whitelist.WhitelistAddListener;
+import nl.dizmizzer.discord.listener.whitelist.WhitelistCheckListener;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.logging.Logger;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CommandListener extends ListenerAdapter {
 
+    private final Map<String, SubCommandHandler> subCommandHandlerMap = new HashMap<>();
+
+    public CommandListener(MemberHandlerManager memberHandlerManager, WhitelistRepository whitelistRepository) {
+        subCommandHandlerMap.put("add", new WhitelistAddListener(memberHandlerManager));
+        subCommandHandlerMap.put("check", new WhitelistCheckListener(whitelistRepository));
+    }
     @Override
     public void onSlashCommandInteraction(@NotNull SlashCommandInteractionEvent event) {
-        Logger.getLogger(getClass().getName()).info("Name: " + event.getInteraction().getName());
-        Logger.getLogger(getClass().getName()).info("Id: " + event.getInteraction().getId());
-        Logger.getLogger(getClass().getName()).info("Command-Id: " + event.getInteraction().getCommandId());
-        Logger.getLogger(getClass().getName()).info("Command-String: " + event.getInteraction().getCommandString());
+        if (!event.getInteraction().getName().equals("whitelist")) return;
+        if (event.getInteraction().getSubcommandName() == null) return;
+        String subCommand = event.getInteraction().getSubcommandName();
+        if (subCommandHandlerMap.containsKey(subCommand)) {
+            try {
+                subCommandHandlerMap.get(subCommand).handleCommand(event);
+            } catch (Exception ex) {
+                event.reply("**Error:** " + ex.getMessage()).setEphemeral(true).queue();
+            }
+        } else {
+            event.reply("**Error:** Could not find subcommand.").queue();
+        }
     }
 }

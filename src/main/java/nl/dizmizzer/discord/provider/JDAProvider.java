@@ -3,7 +3,7 @@ package nl.dizmizzer.discord.provider;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-import nl.dizmizzer.discord.config.ConfigManager;
+import nl.dizmizzer.core.config.ConfigManager;
 
 public class JDAProvider {
 

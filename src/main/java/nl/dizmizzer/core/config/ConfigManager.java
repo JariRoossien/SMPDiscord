@@ -1,4 +1,4 @@
-package nl.dizmizzer.discord.config;
+package nl.dizmizzer.core.config;
 
 public interface ConfigManager {
 

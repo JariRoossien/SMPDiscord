@@ -1,4 +1,4 @@
-package nl.dizmizzer.discord.config;
+package nl.dizmizzer.core.config;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -23,7 +23,7 @@ public class PropertiesConfigManager implements ConfigManager {
     @Override
     public void load() {
         File path = new File("plugins/TRSSMPPlugin");
-        if (!path.mkdirs()) {
+        if (!path.exists() && !path.mkdirs()) {
             throw new RuntimeException("Cannot create Plugins folder!");
         }
         File file = new File(path, "config.properties");

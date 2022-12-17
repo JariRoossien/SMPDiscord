@@ -1,8 +1,8 @@
 package nl.dizmizzer.core.handler;
 
-import net.hypixel.api.reply.GuildReply;
+import nl.dizmizzer.core.entity.WhitelistPlayer;
 
 public interface WhitelistHandler {
 
-    void handle(GuildReply.Guild.Member guildMember);
+    void handle(WhitelistPlayer player);
 }
